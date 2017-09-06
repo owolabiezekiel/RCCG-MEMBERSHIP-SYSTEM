@@ -5,6 +5,7 @@
  */
 package rccgstart;
 import java.io.File;
+import java.io.FileFilter;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Statement;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -70,12 +72,12 @@ public class DatabaseConnect {
                  //JOptionPane.showMessageDialog(null, "Member_Table Exists");
              } else {
                  String createMemberTable = "create table MEMBER_TABLE ("
-                         + "name varchar2(50), " 
-                         + "sex varchar2(12), "
-                         + "phone varchar2(20), "
-                         + "address varchar2(250), "
-                         + "dob varchar2(30), "
-                         + "occupation varchar2(30))";
+                         + "name varchar_IGNORECASE(50), " 
+                         + "sex varchar_IGNORECASE(12), "
+                         + "phone varchar_IGNORECASE(20), "
+                         + "address varchar_IGNORECASE(250), "
+                         + "dob varchar_IGNORECASE(30), "
+                         + "occupation varchar_IGNORECASE(30))";
                  
                  pStatement = connection.prepareStatement(createMemberTable);
                  pStatement.executeUpdate();
@@ -190,6 +192,8 @@ public class DatabaseConnect {
                  int success = pStatement.executeUpdate();
                  if (success > 0){
                      JOptionPane.showMessageDialog(null, "New Member Added successfully");
+                     new addNewMember().setVisible(false);
+                     new viewAllMembers().setVisible(true);
                      return true;
                  } else {
                      JOptionPane.showMessageDialog(null, "Unable To Add New Member");
@@ -232,12 +236,42 @@ public class DatabaseConnect {
     }
     
     public String openFile(){
+        FileNameExtensionFilter fft = new FileNameExtensionFilter("CSV files", "csv", "xlsx");
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select an Excel File to Upload");
+        fileChooser.addChoosableFileFilter(fft);
         if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             File chosenFile = fileChooser.getSelectedFile();
-            return chosenFile.getName();
+            return chosenFile.getAbsolutePath();
         } else {
             return "No file selected";
         }
+    }
+    
+    public int searchRecord(String query, String keyWord, String searchField, JTable table){
+        int rows = 0;
+        try{
+            pStatement = connection.prepareStatement(query);
+            pStatement.setString(1, "%" + keyWord + "%");
+            result = pStatement.executeQuery();
+            while(table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = result.getMetaData().getColumnCount();
+            while(result.next()){
+            Object[] row = new Object[columns];
+            for (int i = 1; i <= columns; i++)
+            {  
+                row[i - 1] = result.getObject(i);
+            }
+            ((DefaultTableModel) table.getModel()).insertRow(result.getRow()-1,row);
+            }
+            result.close();
+            pStatement.close();
+            rows =table.getRowCount();
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error Occured: " + e);
+        }
+        return rows;
     }
 }

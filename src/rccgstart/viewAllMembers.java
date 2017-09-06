@@ -17,6 +17,8 @@ public class viewAllMembers extends javax.swing.JFrame {
     public viewAllMembers() {
         initComponents();
         dbconnect.showAllMembers(membersTable);
+        numOfRecords.setEditable(false);
+        this.setVisible(true);
     }
     
     DatabaseConnect dbconnect = new DatabaseConnect();
@@ -30,13 +32,28 @@ public class viewAllMembers extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         membersTable = new javax.swing.JTable();
         memberDashboard = new javax.swing.JLabel();
         close = new javax.swing.JButton();
         addNewMember = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        searchCriteria = new javax.swing.JComboBox<>();
+        searchPhrase = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        search = new javax.swing.JButton();
+        back = new javax.swing.JButton();
+        numOfRecords = new javax.swing.JTextField();
+        selectFile = new javax.swing.JButton();
+        fileName = new javax.swing.JTextField();
+        upload = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         membersTable.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createCompoundBorder(), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)))));
         membersTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -57,9 +74,12 @@ public class viewAllMembers extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(membersTable);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 103, 823, -1));
+
         memberDashboard.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         memberDashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         memberDashboard.setText("All Members Dashoard");
+        getContentPane().add(memberDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 992, 70));
 
         close.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         close.setText("Close");
@@ -68,6 +88,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 closeActionPerformed(evt);
             }
         });
+        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 536, 97, 37));
 
         addNewMember.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addNewMember.setText("Add New Member");
@@ -76,34 +97,79 @@ public class viewAllMembers extends javax.swing.JFrame {
                 addNewMemberActionPerformed(evt);
             }
         });
+        getContentPane().add(addNewMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(346, 536, 153, 37));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(memberDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(addNewMember, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(memberDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addNewMember, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Find A Member By:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 76, 151, 34));
+
+        searchCriteria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        searchCriteria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Phone Number", "Address", "DateOf Birth", "Sex", "Occupation" }));
+        getContentPane().add(searchCriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 116, 151, 29));
+
+        searchPhrase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        searchPhrase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchPhraseActionPerformed(evt);
+            }
+        });
+        getContentPane().add(searchPhrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 201, 151, 32));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Search Keyword");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 163, 151, 27));
+
+        search.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(891, 251, -1, 31));
+
+        back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 536, 97, 37));
+
+        numOfRecords.setBackground(new java.awt.Color(204, 204, 204));
+        numOfRecords.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        numOfRecords.setFocusCycleRoot(true);
+        numOfRecords.setFocusTraversalPolicyProvider(true);
+        numOfRecords.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numOfRecordsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(numOfRecords, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 312, 151, 32));
+
+        selectFile.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        selectFile.setText("Select File");
+        selectFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectFileActionPerformed(evt);
+            }
+        });
+        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(874, 430, 99, -1));
+
+        fileName.setEditable(false);
+        fileName.setText("Select a file.......");
+        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 404, 151, -1));
+
+        upload.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        upload.setText("Upload");
+        upload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadActionPerformed(evt);
+            }
+        });
+        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 457, -1, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 376, 151, 10));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -111,13 +177,59 @@ public class viewAllMembers extends javax.swing.JFrame {
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new Welcome().setVisible(true);
     }//GEN-LAST:event_closeActionPerformed
 
     private void addNewMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewMemberActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
         new addNewMember().setVisible(true);
     }//GEN-LAST:event_addNewMemberActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        this.setVisible(false);
+        //new Welcome().setVisible(true);
+    }//GEN-LAST:event_backActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        String searchField = searchCriteria.getSelectedItem().toString();
+        String query = "";
+        String keyWord = searchPhrase.getText();
+        if(searchField.equals("Name")){
+            query = "Select * from MEMBER_TABLE where name LIKE ?";
+        } else if(searchField.equals("Sex")){
+            query = "Select * from MEMBER_TABLE where sex like ?";
+        } else if(searchField.equals("Phone Number")){
+            query = "Select * from MEMBER_TABLE where phone like ?";
+        } else if(searchField.equals("Address")){
+            query = "Select * from MEMBER_TABLE where address like ?";
+        } else if(searchField.equals("Occupation")){
+            query = "Select * from MEMBER_TABLE where occupation like ?";
+        } else {
+            query = "Select * from MEMBER_TABLE where dob like ?";
+        }
+        int numRows = dbconnect.searchRecord(query, keyWord, searchField, membersTable);
+        if (numRows == 1)
+            numOfRecords.setText("Found " + numRows + " record");
+        else
+        numOfRecords.setText("Found " + numRows + " records");
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void searchPhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPhraseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchPhraseActionPerformed
+
+    private void numOfRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numOfRecordsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numOfRecordsActionPerformed
+
+    private void selectFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectFileActionPerformed
+        String file = dbconnect.openFile();
+        upload.setVisible(true);
+        fileName.setText(file);
+    }//GEN-LAST:event_selectFileActionPerformed
+
+    private void uploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_uploadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,9 +268,21 @@ public class viewAllMembers extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewMember;
+    private javax.swing.JButton back;
     private javax.swing.JButton close;
+    private javax.swing.JTextField fileName;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel memberDashboard;
     private javax.swing.JTable membersTable;
+    private javax.swing.JTextField numOfRecords;
+    private javax.swing.JButton search;
+    private javax.swing.JComboBox<String> searchCriteria;
+    private javax.swing.JTextField searchPhrase;
+    private javax.swing.JButton selectFile;
+    private javax.swing.JButton upload;
     // End of variables declaration//GEN-END:variables
 }

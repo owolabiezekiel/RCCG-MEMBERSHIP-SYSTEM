@@ -18,7 +18,6 @@ public class addNewMember extends javax.swing.JFrame {
      */
     public addNewMember() {
         initComponents();
-        new viewAllMembers().setVisible(false);
         populateDate();
     }
     
@@ -190,15 +189,15 @@ public class addNewMember extends javax.swing.JFrame {
                     .addComponent(newAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newAddressField, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(day)
                         .addComponent(year)
                         .addComponent(month)
                         .addComponent(selectDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(selectMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(selectYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(selectYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newOccuField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,7 +212,7 @@ public class addNewMember extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewMenberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewMenberActionPerformed
-        // TODO add your handling code here:
+
         String name = newNameField.getText();
         String sex = selectSex.getSelectedItem().toString();
         String phone = newPhoneField.getText();
@@ -226,8 +225,6 @@ public class addNewMember extends javax.swing.JFrame {
             return;
         }
         dbconnect.addNewMember(name, sex, phone, address, dob, occupation);
-        this.setVisible(true);
-        new viewAllMembers().setVisible(true);
         newNameField.setText("");
         newPhoneField.setText("");
         newAddressField.setText("");
