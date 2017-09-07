@@ -5,6 +5,8 @@
  */
 package rccgstart;
 
+import javax.swing.UIManager;
+
 /**
  *
  * @author TOBILOBA
@@ -101,11 +103,11 @@ public class viewAllMembers extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Find A Member By:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 76, 151, 34));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 80, 151, 34));
 
         searchCriteria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         searchCriteria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Phone Number", "Address", "DateOf Birth", "Sex", "Occupation" }));
-        getContentPane().add(searchCriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 116, 151, 29));
+        getContentPane().add(searchCriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 120, 151, 29));
 
         searchPhrase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         searchPhrase.addActionListener(new java.awt.event.ActionListener() {
@@ -113,11 +115,11 @@ public class viewAllMembers extends javax.swing.JFrame {
                 searchPhraseActionPerformed(evt);
             }
         });
-        getContentPane().add(searchPhrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 201, 151, 32));
+        getContentPane().add(searchPhrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 200, 151, 32));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Search Keyword");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 163, 151, 27));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 160, 151, 27));
 
         search.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         search.setText("Search");
@@ -126,7 +128,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 searchActionPerformed(evt);
             }
         });
-        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(891, 251, -1, 31));
+        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 250, -1, 31));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setText("Back");
@@ -146,7 +148,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 numOfRecordsActionPerformed(evt);
             }
         });
-        getContentPane().add(numOfRecords, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 312, 151, 32));
+        getContentPane().add(numOfRecords, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 310, 151, 32));
 
         selectFile.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         selectFile.setText("Select File");
@@ -155,11 +157,11 @@ public class viewAllMembers extends javax.swing.JFrame {
                 selectFileActionPerformed(evt);
             }
         });
-        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(874, 430, 99, -1));
+        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 430, 99, -1));
 
         fileName.setEditable(false);
         fileName.setText("Select a file.......");
-        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 404, 151, -1));
+        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, 151, -1));
 
         upload.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         upload.setText("Upload");
@@ -168,8 +170,8 @@ public class viewAllMembers extends javax.swing.JFrame {
                 uploadActionPerformed(evt);
             }
         });
-        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 457, -1, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(851, 376, 151, 10));
+        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 460, -1, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 370, 180, 10));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -196,7 +198,7 @@ public class viewAllMembers extends javax.swing.JFrame {
         if(searchField.equals("Name")){
             query = "Select * from MEMBER_TABLE where name LIKE ?";
         } else if(searchField.equals("Sex")){
-            query = "Select * from MEMBER_TABLE where sex like ?";
+            query = "Select * from MEMBER_TABLE where sex = ?";
         } else if(searchField.equals("Phone Number")){
             query = "Select * from MEMBER_TABLE where phone like ?";
         } else if(searchField.equals("Address")){
@@ -242,11 +244,14 @@ public class viewAllMembers extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
-            }
+                } 
+                
+                
+            } 
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(viewAllMembers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

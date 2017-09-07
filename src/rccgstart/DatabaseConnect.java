@@ -252,7 +252,11 @@ public class DatabaseConnect {
         int rows = 0;
         try{
             pStatement = connection.prepareStatement(query);
-            pStatement.setString(1, "%" + keyWord + "%");
+            if (searchField.equals("Sex")){
+                pStatement.setString(1, keyWord);
+            } else{
+                pStatement.setString(1, "%" + keyWord + "%");
+            }
             result = pStatement.executeQuery();
             while(table.getRowCount() > 0) {
                 ((DefaultTableModel) table.getModel()).removeRow(0);
