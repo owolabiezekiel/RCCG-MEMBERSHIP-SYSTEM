@@ -5,6 +5,11 @@
  */
 package rccgstart;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 /**
@@ -20,6 +25,7 @@ public class viewAllMembers extends javax.swing.JFrame {
         initComponents();
         dbconnect.showAllMembers(membersTable);
         numOfRecords.setEditable(false);
+        upload.setVisible(false);
         this.setVisible(true);
     }
     
@@ -51,6 +57,8 @@ public class viewAllMembers extends javax.swing.JFrame {
         fileName = new javax.swing.JTextField();
         upload = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        uploadLabel = new javax.swing.JLabel();
+        exportDatabase = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -90,7 +98,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 closeActionPerformed(evt);
             }
         });
-        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 536, 97, 37));
+        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 530, 97, 37));
 
         addNewMember.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addNewMember.setText("Add New Member");
@@ -99,7 +107,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 addNewMemberActionPerformed(evt);
             }
         });
-        getContentPane().add(addNewMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(346, 536, 153, 37));
+        getContentPane().add(addNewMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 530, 153, 37));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Find A Member By:");
@@ -137,7 +145,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 backActionPerformed(evt);
             }
         });
-        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 536, 97, 37));
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 97, 37));
 
         numOfRecords.setBackground(new java.awt.Color(204, 204, 204));
         numOfRecords.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -157,11 +165,11 @@ public class viewAllMembers extends javax.swing.JFrame {
                 selectFileActionPerformed(evt);
             }
         });
-        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 430, 99, -1));
+        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 460, 99, -1));
 
         fileName.setEditable(false);
         fileName.setText("Select a file.......");
-        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, 151, -1));
+        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 430, 151, -1));
 
         upload.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         upload.setText("Upload");
@@ -170,8 +178,22 @@ public class viewAllMembers extends javax.swing.JFrame {
                 uploadActionPerformed(evt);
             }
         });
-        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 460, -1, -1));
+        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 490, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 370, 180, 10));
+
+        uploadLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        uploadLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        uploadLabel.setText("<html>Upload to database from an Excel File");
+        getContentPane().add(uploadLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 374, 160, 50));
+
+        exportDatabase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        exportDatabase.setText("Export to Excel");
+        exportDatabase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportDatabaseActionPerformed(evt);
+            }
+        });
+        getContentPane().add(exportDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, 130, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -230,8 +252,16 @@ public class viewAllMembers extends javax.swing.JFrame {
     }//GEN-LAST:event_selectFileActionPerformed
 
     private void uploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_uploadActionPerformed
+
+    private void exportDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportDatabaseActionPerformed
+        try {
+            dbconnect.exportDatabase();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_exportDatabaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,6 +305,7 @@ public class viewAllMembers extends javax.swing.JFrame {
     private javax.swing.JButton addNewMember;
     private javax.swing.JButton back;
     private javax.swing.JButton close;
+    private javax.swing.JButton exportDatabase;
     private javax.swing.JTextField fileName;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -289,5 +320,6 @@ public class viewAllMembers extends javax.swing.JFrame {
     private javax.swing.JTextField searchPhrase;
     private javax.swing.JButton selectFile;
     private javax.swing.JButton upload;
+    private javax.swing.JLabel uploadLabel;
     // End of variables declaration//GEN-END:variables
 }

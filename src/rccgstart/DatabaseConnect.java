@@ -5,24 +5,31 @@
  */
 package rccgstart;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -34,6 +41,10 @@ public class DatabaseConnect {
      ResultSet result;
      PreparedStatement pStatement;
      public static String currentAdmin = "";
+     private static String absolutePathhh;
+     private static String extension;
+     
+     
      String currentPassword ="";
      public DatabaseConnect(){
      try{
@@ -64,7 +75,20 @@ public class DatabaseConnect {
             JOptionPane.showMessageDialog(null, "Member_Table Was Not Created Successfully" + e);
          }
     }
-     
+    public void setExtension(String ext){
+        extension = ext;
+    }
+    public String getExtension(){
+        return extension;
+    }
+    
+    public void setAbsolutePathhh(String path){
+        absolutePathhh = path;
+    }
+    
+    public String getAbsolutePathhh(){
+        return absolutePathhh;
+    }
      public void createMemberTable(){
         try{
              dmd = connection.getMetaData();
@@ -238,12 +262,15 @@ public class DatabaseConnect {
     }
     
     public String openFile(){
-        FileNameExtensionFilter fft = new FileNameExtensionFilter("CSV files", "csv", "xlsx");
+        FileNameExtensionFilter fft = new FileNameExtensionFilter("CSV files", "csv", "xlsx", "xls");
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select an Excel File to Upload");
         fileChooser.addChoosableFileFilter(fft);
         if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             File chosenFile = fileChooser.getSelectedFile();
+            String absolutePath = chosenFile.getAbsolutePath();
+            setExtension(absolutePath.substring(absolutePath.indexOf(".") + 1));
+            setAbsolutePathhh(absolutePath);
             return chosenFile.getAbsolutePath();
         } else {
             return "No file selected";
@@ -279,5 +306,40 @@ public class DatabaseConnect {
             JOptionPane.showMessageDialog(null, "Error Occured: " + e);
         }
         return rows;
+    }
+    
+    public void exportDatabase() throws Exception{
+        XSSFWorkbook xlsWorkbook = new XSSFWorkbook();
+        XSSFSheet xlsSheet = xlsWorkbook.createSheet();
+        short rowIndex = 0;
+
+        // Execute SQL query
+        PreparedStatement stmt = connection.prepareStatement("select * from MEMBER_TABLE");
+        ResultSet rs = stmt.executeQuery();
+
+        ResultSetMetaData colInfo = rs.getMetaData();
+        List <String> colNames = new ArrayList<String>();
+        XSSFRow titleRow = xlsSheet.createRow(rowIndex++);
+
+        for (int i = 1; i<= colInfo.getColumnCount(); i++) {
+          colNames.add(colInfo.getColumnName(i));
+          titleRow.createCell((short) (i-1)).setCellValue(
+            new XSSFRichTextString(colInfo.getColumnName(i)));
+          xlsSheet.setColumnWidth((short) (i-1), (short) 4000);
+        }
+        // Save all the data from the database table rows
+        while (rs.next()) {
+          XSSFRow dataRow = xlsSheet.createRow(rowIndex++);
+          short colIndex = 0;
+          for (String colName : colNames) {
+            dataRow.createCell(colIndex++).setCellValue(
+              new XSSFRichTextString(rs.getString(colName)));
+          }
+        }
+
+        // Write to disk
+        xlsWorkbook.write(new FileOutputStream("C:\\Users\\TOBILOBA\\Desktop\\rccgdatabasetoexcel.xlsx"));
+        xlsWorkbook.close();
+        System.out.println("rccgdatabasetoexcel.xlsx written successfully");
     }
 }
