@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -252,7 +253,11 @@ public class viewAllMembers extends javax.swing.JFrame {
     }//GEN-LAST:event_selectFileActionPerformed
 
     private void uploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadActionPerformed
-       
+       try{
+           dbconnect.importExcel();
+       } catch(Exception e) {
+           JOptionPane.showMessageDialog(null, e.toString());
+       }
     }//GEN-LAST:event_uploadActionPerformed
 
     private void exportDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportDatabaseActionPerformed

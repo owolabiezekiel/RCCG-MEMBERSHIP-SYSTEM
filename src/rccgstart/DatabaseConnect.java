@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -25,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -204,7 +204,7 @@ public class DatabaseConnect {
              pStatement.setString(6, occupation);
              result = pStatement.executeQuery();
              if (result.next()){
-                 JOptionPane.showMessageDialog(null, "This Member Already Exists");
+                 System.out.printf("Already exists: %s\t\t%s\t%s\t%s\t\t%s\t%s\n", name, sex, phone, address, dob, occupation);
                  return false;
              } else {
                  String query = "insert into MEMBER_TABLE values(?,?,?,?,?,?)";
@@ -217,9 +217,9 @@ public class DatabaseConnect {
                 pStatement.setString(6, occupation);
                  int success = pStatement.executeUpdate();
                  if (success > 0){
-                     JOptionPane.showMessageDialog(null, "New Member Added successfully");
-                     new addNewMember().setVisible(false);
-                     new viewAllMembers().setVisible(true);
+                     //JOptionPane.showMessageDialog(null, "New Member Added successfully");
+                     //new addNewMember().setVisible(false);
+                     //new viewAllMembers().setVisible(true);
                      return true;
                  } else {
                      JOptionPane.showMessageDialog(null, "Unable To Add New Member");
@@ -310,7 +310,7 @@ public class DatabaseConnect {
     
     public void exportDatabase() throws Exception{
         XSSFWorkbook xlsWorkbook = new XSSFWorkbook();
-        XSSFSheet xlsSheet = xlsWorkbook.createSheet();
+        XSSFSheet xlsSheet = xlsWorkbook.createSheet("Member Database");
         short rowIndex = 0;
 
         // Execute SQL query
@@ -341,5 +341,24 @@ public class DatabaseConnect {
         xlsWorkbook.write(new FileOutputStream("C:\\Users\\TOBILOBA\\Desktop\\rccgdatabasetoexcel.xlsx"));
         xlsWorkbook.close();
         System.out.println("rccgdatabasetoexcel.xlsx written successfully");
+    }
+    
+    public void importExcel()throws Exception{
+        List sheetData = new ArrayList();  
+        FileInputStream file = new FileInputStream(getAbsolutePathhh());
+        XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
+        XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+        Row row;
+        for(int i=0; i<=sheet.getLastRowNum(); i++){
+            row = sheet.getRow(i);
+            String name = row.getCell(0).getStringCellValue();
+            String sex = row.getCell(1).getStringCellValue();
+            String phone = row.getCell(2).getStringCellValue();
+            String address = row.getCell(2).getStringCellValue();
+            String dob = row.getCell(4).getStringCellValue();
+            String occupation = row.getCell(5).getStringCellValue();
+            
+            addNewMember(name, sex, phone, address, dob, occupation);
+        }
     }
 }
