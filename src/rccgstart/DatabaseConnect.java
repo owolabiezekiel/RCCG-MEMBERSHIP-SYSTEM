@@ -361,4 +361,16 @@ public class DatabaseConnect {
             addNewMember(name, sex, phone, address, dob, occupation);
         }
     }
+    
+    public void deleteMember(String query, String criteria, String delKey, JTable table)throws Exception{
+        pStatement = connection.prepareStatement(query);
+        pStatement.setString(1, delKey);
+        int success = pStatement.executeUpdate();
+        if (success > 0) {
+            JOptionPane.showMessageDialog(null, "Member record deleted successfully");
+        } else {
+            JOptionPane.showMessageDialog(null, "Member record failed to delete");
+        }
+        refreshDB(table);
+    }
 }

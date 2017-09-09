@@ -28,6 +28,7 @@ public class viewAllMembers extends javax.swing.JFrame {
         numOfRecords.setEditable(false);
         upload.setVisible(false);
         this.setVisible(true);
+        deleteWord.setText("Where " + deleteCriteria.getSelectedItem() +" is....");
     }
     
     DatabaseConnect dbconnect = new DatabaseConnect();
@@ -60,10 +61,20 @@ public class viewAllMembers extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         uploadLabel = new javax.swing.JLabel();
         exportDatabase = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        deleteMemberLabel = new javax.swing.JLabel();
+        deleteCriteria = new javax.swing.JComboBox<>();
+        deleteWord = new javax.swing.JLabel();
+        deletePhrase = new javax.swing.JTextField();
+        delete = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1240, 590));
+        setPreferredSize(new java.awt.Dimension(1240, 590));
+        setSize(new java.awt.Dimension(1240, 590));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         membersTable.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createCompoundBorder(), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)))));
@@ -90,7 +101,7 @@ public class viewAllMembers extends javax.swing.JFrame {
         memberDashboard.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         memberDashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         memberDashboard.setText("All Members Dashoard");
-        getContentPane().add(memberDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 992, 70));
+        getContentPane().add(memberDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 830, 70));
 
         close.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         close.setText("Close");
@@ -99,7 +110,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 closeActionPerformed(evt);
             }
         });
-        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 530, 97, 37));
+        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 530, 97, 37));
 
         addNewMember.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addNewMember.setText("Add New Member");
@@ -112,11 +123,11 @@ public class viewAllMembers extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Find A Member By:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 80, 151, 34));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 151, 34));
 
         searchCriteria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         searchCriteria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Phone Number", "Address", "DateOf Birth", "Sex", "Occupation" }));
-        getContentPane().add(searchCriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 120, 151, 29));
+        getContentPane().add(searchCriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 50, 170, 29));
 
         searchPhrase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         searchPhrase.addActionListener(new java.awt.event.ActionListener() {
@@ -124,11 +135,11 @@ public class viewAllMembers extends javax.swing.JFrame {
                 searchPhraseActionPerformed(evt);
             }
         });
-        getContentPane().add(searchPhrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 200, 151, 32));
+        getContentPane().add(searchPhrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 150, 170, 32));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Search Keyword");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 160, 151, 27));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 110, 151, 27));
 
         search.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         search.setText("Search");
@@ -137,7 +148,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 searchActionPerformed(evt);
             }
         });
-        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 250, -1, 31));
+        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 200, -1, 31));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setText("Back");
@@ -157,7 +168,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 numOfRecordsActionPerformed(evt);
             }
         });
-        getContentPane().add(numOfRecords, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 310, 151, 32));
+        getContentPane().add(numOfRecords, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, 190, 32));
 
         selectFile.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         selectFile.setText("Select File");
@@ -166,11 +177,12 @@ public class viewAllMembers extends javax.swing.JFrame {
                 selectFileActionPerformed(evt);
             }
         });
-        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 460, 99, -1));
+        getContentPane().add(selectFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 410, 99, 30));
 
         fileName.setEditable(false);
         fileName.setText("Select a file.......");
-        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 430, 151, -1));
+        fileName.setAlignmentX(1.0F);
+        getContentPane().add(fileName, new org.netbeans.lib.awtextra.AbsoluteConstraints(845, 370, 180, 30));
 
         upload.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         upload.setText("Upload");
@@ -179,13 +191,13 @@ public class viewAllMembers extends javax.swing.JFrame {
                 uploadActionPerformed(evt);
             }
         });
-        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 490, -1, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 370, 180, 10));
+        getContentPane().add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 450, -1, 30));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 320, 190, -1));
 
         uploadLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         uploadLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         uploadLabel.setText("<html>Upload to database from an Excel File");
-        getContentPane().add(uploadLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 374, 160, 50));
+        getContentPane().add(uploadLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(845, 320, 180, 50));
 
         exportDatabase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         exportDatabase.setText("Export to Excel");
@@ -195,6 +207,46 @@ public class viewAllMembers extends javax.swing.JFrame {
             }
         });
         getContentPane().add(exportDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, 130, 40));
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 0, 10, 590));
+
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, -1, 590));
+
+        deleteMemberLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        deleteMemberLabel.setText("Delete Member By:");
+        getContentPane().add(deleteMemberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 20, 130, -1));
+
+        deleteCriteria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        deleteCriteria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Phone Number", "Address", "DateOf Birth", "Sex", "Occupation" }));
+        deleteCriteria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCriteriaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deleteCriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 50, 170, 29));
+
+        deleteWord.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        deleteWord.setText("Delete Keyword");
+        getContentPane().add(deleteWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 180, 27));
+
+        deletePhrase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        deletePhrase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletePhraseActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deletePhrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 140, 170, 32));
+
+        delete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, -1, 31));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -268,6 +320,38 @@ public class viewAllMembers extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_exportDatabaseActionPerformed
 
+    private void deletePhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePhraseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deletePhraseActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        String criteria = deleteCriteria.getSelectedItem().toString();
+        String query = "";
+        String deleteString = deletePhrase.getText();
+        if(criteria.equals("Name")){
+            query = "Delete from MEMBER_TABLE where name = ?";
+        } else if(criteria.equals("Sex")){
+            query = "Delete from MEMBER_TABLE where sex = ?";
+        } else if(criteria.equals("Phone Number")){
+            query = "Delete from MEMBER_TABLE where phone = ?";
+        } else if(criteria.equals("Address")){
+            query = "Delete from MEMBER_TABLE where address = ?";
+        } else if(criteria.equals("Occupation")){
+            query = "Delete from MEMBER_TABLE where occupation = ?";
+        } else {
+            query = "Delete from MEMBER_TABLE where dob = ?";
+        }
+        try {
+            dbconnect.deleteMember(query, criteria, deleteString, membersTable);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void deleteCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCriteriaActionPerformed
+        deleteWord.setText("Where " + deleteCriteria.getSelectedItem() +" is....");
+    }//GEN-LAST:event_deleteCriteriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,6 +394,11 @@ public class viewAllMembers extends javax.swing.JFrame {
     private javax.swing.JButton addNewMember;
     private javax.swing.JButton back;
     private javax.swing.JButton close;
+    private javax.swing.JButton delete;
+    private javax.swing.JComboBox<String> deleteCriteria;
+    private javax.swing.JLabel deleteMemberLabel;
+    private javax.swing.JTextField deletePhrase;
+    private javax.swing.JLabel deleteWord;
     private javax.swing.JButton exportDatabase;
     private javax.swing.JTextField fileName;
     private javax.swing.JButton jButton1;
@@ -317,6 +406,8 @@ public class viewAllMembers extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel memberDashboard;
     private javax.swing.JTable membersTable;
     private javax.swing.JTextField numOfRecords;
