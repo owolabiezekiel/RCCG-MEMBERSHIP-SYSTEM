@@ -336,7 +336,6 @@ public class DatabaseConnect {
               new XSSFRichTextString(rs.getString(colName)));
           }
         }
-
         // Write to disk
         xlsWorkbook.write(new FileOutputStream("C:\\Users\\TOBILOBA\\Desktop\\rccgdatabasetoexcel.xlsx"));
         xlsWorkbook.close();
@@ -346,19 +345,39 @@ public class DatabaseConnect {
     public void importExcel()throws Exception{
         List sheetData = new ArrayList();  
         FileInputStream file = new FileInputStream(getAbsolutePathhh());
-        XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
-        XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
-        Row row;
-        for(int i=0; i<=sheet.getLastRowNum(); i++){
-            row = sheet.getRow(i);
-            String name = row.getCell(0).getStringCellValue();
-            String sex = row.getCell(1).getStringCellValue();
-            String phone = row.getCell(2).getStringCellValue();
-            String address = row.getCell(2).getStringCellValue();
-            String dob = row.getCell(4).getStringCellValue();
-            String occupation = row.getCell(5).getStringCellValue();
+        if(extension.equals("xlsx")){
+            XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
+            XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+            Row row;
+            for(int i=0; i<=sheet.getLastRowNum(); i++){
+                row = sheet.getRow(i);
+                String name = row.getCell(0).getStringCellValue();
+                String sex = row.getCell(1).getStringCellValue();
+                String phone = row.getCell(2).getStringCellValue();
+                String address = row.getCell(2).getStringCellValue();
+                String dob = row.getCell(4).getStringCellValue();
+                String occupation = row.getCell(5).getStringCellValue();
             
-            addNewMember(name, sex, phone, address, dob, occupation);
+                addNewMember(name, sex, phone, address, dob, occupation);
+            }
+        } else if(extension.equals("xls")){
+            HSSFWorkbook workbook = new HSSFWorkbook(file);  //create a new workbook from the file selected 
+            HSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+            Row row;
+            for(int i=0; i<=sheet.getLastRowNum(); i++){
+                row = sheet.getRow(i);
+                String name = row.getCell(0).getStringCellValue();
+                String sex = row.getCell(1).getStringCellValue();
+                String phone = row.getCell(2).getStringCellValue();
+                String address = row.getCell(2).getStringCellValue();
+                String dob = row.getCell(4).getStringCellValue();
+                String occupation = row.getCell(5).getStringCellValue();
+            
+                addNewMember(name, sex, phone, address, dob, occupation);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chosen file is not of a supported format. \nPlease make sure it is a"
+                    + "Microsoft Excel file ");
         }
     }
     
