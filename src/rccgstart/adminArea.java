@@ -222,7 +222,7 @@ public class adminArea extends javax.swing.JFrame {
 
     private void updatePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePasswordActionPerformed
         // TODO add your handling code here:
-        dbconnect.updatePassword(passwordUpdate.getText(), dbconnect.currentAdmin);
+        dbconnect.updatePassword(passwordUpdate.getText(), DatabaseConnect.currentAdmin);
     }//GEN-LAST:event_updatePasswordActionPerformed
 
     /**

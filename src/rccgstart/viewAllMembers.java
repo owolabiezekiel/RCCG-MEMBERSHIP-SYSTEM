@@ -5,11 +5,9 @@
  */
 package rccgstart;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -27,7 +25,6 @@ public class viewAllMembers extends javax.swing.JFrame {
         dbconnect.showAllMembers(membersTable);
         numOfRecords.setEditable(false);
         upload.setVisible(false);
-        this.setVisible(true);
         deleteWord.setText("Where " + deleteCriteria.getSelectedItem() +" is....");
     }
     
@@ -270,18 +267,25 @@ public class viewAllMembers extends javax.swing.JFrame {
         String searchField = searchCriteria.getSelectedItem().toString();
         String query = "";
         String keyWord = searchPhrase.getText();
-        if(searchField.equals("Name")){
-            query = "Select * from MEMBER_TABLE where name LIKE ?";
-        } else if(searchField.equals("Sex")){
-            query = "Select * from MEMBER_TABLE where sex = ?";
-        } else if(searchField.equals("Phone Number")){
-            query = "Select * from MEMBER_TABLE where phone like ?";
-        } else if(searchField.equals("Address")){
-            query = "Select * from MEMBER_TABLE where address like ?";
-        } else if(searchField.equals("Occupation")){
-            query = "Select * from MEMBER_TABLE where occupation like ?";
-        } else {
-            query = "Select * from MEMBER_TABLE where dob like ?";
+        switch (searchField) {
+            case "Name":
+                query = "Select * from MEMBER_TABLE where name LIKE ?";
+                break;
+            case "Sex":
+                query = "Select * from MEMBER_TABLE where sex = ?";
+                break;
+            case "Phone Number":
+                query = "Select * from MEMBER_TABLE where phone like ?";
+                break;
+            case "Address":
+                query = "Select * from MEMBER_TABLE where address like ?";
+                break;
+            case "Occupation":
+                query = "Select * from MEMBER_TABLE where occupation like ?";
+                break;
+            default:
+                query = "Select * from MEMBER_TABLE where dob like ?";
+                break;
         }
         int numRows = dbconnect.searchRecord(query, keyWord, searchField, membersTable);
         if (numRows == 1)
@@ -315,7 +319,7 @@ public class viewAllMembers extends javax.swing.JFrame {
     private void exportDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportDatabaseActionPerformed
         try {
             dbconnect.exportDatabase();
-        } catch (Exception e){
+        } catch (IOException | SQLException e){
             System.out.println(e);
         }
     }//GEN-LAST:event_exportDatabaseActionPerformed
@@ -326,20 +330,27 @@ public class viewAllMembers extends javax.swing.JFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         String criteria = deleteCriteria.getSelectedItem().toString();
-        String query = "";
+        String query;
         String deleteString = deletePhrase.getText();
-        if(criteria.equals("Name")){
-            query = "Delete from MEMBER_TABLE where name = ?";
-        } else if(criteria.equals("Sex")){
-            query = "Delete from MEMBER_TABLE where sex = ?";
-        } else if(criteria.equals("Phone Number")){
-            query = "Delete from MEMBER_TABLE where phone = ?";
-        } else if(criteria.equals("Address")){
-            query = "Delete from MEMBER_TABLE where address = ?";
-        } else if(criteria.equals("Occupation")){
-            query = "Delete from MEMBER_TABLE where occupation = ?";
-        } else {
-            query = "Delete from MEMBER_TABLE where dob = ?";
+        switch (criteria) {
+            case "Name":
+                query = "Delete from MEMBER_TABLE where name = ?";
+                break;
+            case "Sex":
+                query = "Delete from MEMBER_TABLE where sex = ?";
+                break;
+            case "Phone Number":
+                query = "Delete from MEMBER_TABLE where phone = ?";
+                break;
+            case "Address":
+                query = "Delete from MEMBER_TABLE where address = ?";
+                break;
+            case "Occupation":
+                query = "Delete from MEMBER_TABLE where occupation = ?";
+                break;
+            default:
+                query = "Delete from MEMBER_TABLE where dob = ?";
+                break;
         }
         try {
             dbconnect.deleteMember(query, criteria, deleteString, membersTable);
@@ -383,10 +394,8 @@ public class viewAllMembers extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new viewAllMembers().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new viewAllMembers().setVisible(true);
         });
     }
 

@@ -6,7 +6,6 @@
 package rccgstart;
 
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -15,7 +14,7 @@ import javax.swing.UIManager;
 public class Dashboarder extends javax.swing.JFrame {
 
     /**
-     * Creates new form Dashboarder
+     * Creates new form Dashboard
      */
     public Dashboarder() {
         initComponents();

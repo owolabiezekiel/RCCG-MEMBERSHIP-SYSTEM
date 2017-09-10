@@ -25,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -71,7 +70,7 @@ public class DatabaseConnect {
                  pStatement.executeUpdate();
                  JOptionPane.showMessageDialog(null, "Admin_Table Created Successfully");
              }
-         } catch (Exception e) {
+         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Member_Table Was Not Created Successfully" + e);
          }
     }
@@ -109,7 +108,7 @@ public class DatabaseConnect {
                  pStatement.executeUpdate();
                  JOptionPane.showMessageDialog(null, "Member_Table Created Successfully");
              }
-         } catch (Exception e){
+         } catch (SQLException e){
              //Handle exception code
              JOptionPane.showMessageDialog(null, "Member_Table Was Not Created Successfully" + e);
          }
@@ -133,7 +132,7 @@ public class DatabaseConnect {
                  JOptionPane.showMessageDialog(null, "Invalid Username & Password combination");
                  return false;
              }
-         } catch (Exception e){
+         } catch (SQLException e){
              //Handle exception code
              JOptionPane.showMessageDialog(null, e);
              return false;
@@ -167,7 +166,7 @@ public class DatabaseConnect {
                  }
              }
              
-         } catch (Exception e){
+         } catch (SQLException e){
              JOptionPane.showMessageDialog(null, "Unable to create new admin" + e);
          }
      }
@@ -227,7 +226,7 @@ public class DatabaseConnect {
                  }
              }
              
-         } catch (Exception e){
+         } catch (SQLException e){
              JOptionPane.showMessageDialog(null, "Unable To Add New Member" + e);
          }
          return false;
@@ -308,77 +307,82 @@ public class DatabaseConnect {
         return rows;
     }
     
-    public void exportDatabase() throws Exception{
-        XSSFWorkbook xlsWorkbook = new XSSFWorkbook();
-        XSSFSheet xlsSheet = xlsWorkbook.createSheet("Member Database");
-        short rowIndex = 0;
-
-        // Execute SQL query
-        PreparedStatement stmt = connection.prepareStatement("select * from MEMBER_TABLE");
-        ResultSet rs = stmt.executeQuery();
-
-        ResultSetMetaData colInfo = rs.getMetaData();
-        List <String> colNames = new ArrayList<String>();
-        XSSFRow titleRow = xlsSheet.createRow(rowIndex++);
-
-        for (int i = 1; i<= colInfo.getColumnCount(); i++) {
-          colNames.add(colInfo.getColumnName(i));
-          titleRow.createCell((short) (i-1)).setCellValue(
-            new XSSFRichTextString(colInfo.getColumnName(i)));
-          xlsSheet.setColumnWidth((short) (i-1), (short) 4000);
-        }
-        // Save all the data from the database table rows
-        while (rs.next()) {
-          XSSFRow dataRow = xlsSheet.createRow(rowIndex++);
-          short colIndex = 0;
-          for (String colName : colNames) {
-            dataRow.createCell(colIndex++).setCellValue(
-              new XSSFRichTextString(rs.getString(colName)));
-          }
-        }
-        // Write to disk
-        xlsWorkbook.write(new FileOutputStream("C:\\Users\\TOBILOBA\\Desktop\\rccgdatabasetoexcel.xlsx"));
-        xlsWorkbook.close();
+    public void exportDatabase() throws IOException, SQLException{
+         try (XSSFWorkbook xlsWorkbook = new XSSFWorkbook()) {
+             XSSFSheet xlsSheet = xlsWorkbook.createSheet("Member Database");
+             short rowIndex = 0;
+             
+             // Execute SQL query
+             PreparedStatement stmt = connection.prepareStatement("select * from MEMBER_TABLE");
+             ResultSet rs = stmt.executeQuery();
+             
+             ResultSetMetaData colInfo = rs.getMetaData();
+             List <String> colNames = new ArrayList<>();
+             XSSFRow titleRow = xlsSheet.createRow(rowIndex++);
+             
+             for (int i = 1; i<= colInfo.getColumnCount(); i++) {
+                 colNames.add(colInfo.getColumnName(i));
+                 titleRow.createCell((short) (i-1)).setCellValue(
+                         new XSSFRichTextString(colInfo.getColumnName(i)));
+                 xlsSheet.setColumnWidth((short) (i-1), (short) 4000);
+             }
+             // Save all the data from the database table rows
+             while (rs.next()) {
+                 XSSFRow dataRow = xlsSheet.createRow(rowIndex++);
+                 short colIndex = 0;
+                 for (String colName : colNames) {
+                     dataRow.createCell(colIndex++).setCellValue(
+                             new XSSFRichTextString(rs.getString(colName)));
+                 }
+             }
+             // Write to disk
+             xlsWorkbook.write(new FileOutputStream("C:\\Users\\TOBILOBA\\Desktop\\rccgdatabasetoexcel.xlsx"));
+         }
         System.out.println("rccgdatabasetoexcel.xlsx written successfully");
     }
     
-    public void importExcel()throws Exception{
-        List sheetData = new ArrayList();  
+    public void importExcel()throws Exception{ 
         FileInputStream file = new FileInputStream(getAbsolutePathhh());
-        if(extension.equals("xlsx")){
-            XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
-            XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
-            Row row;
-            for(int i=0; i<=sheet.getLastRowNum(); i++){
-                row = sheet.getRow(i);
-                String name = row.getCell(0).getStringCellValue();
-                String sex = row.getCell(1).getStringCellValue();
-                String phone = row.getCell(2).getStringCellValue();
-                String address = row.getCell(2).getStringCellValue();
-                String dob = row.getCell(4).getStringCellValue();
-                String occupation = row.getCell(5).getStringCellValue();
-            
-                addNewMember(name, sex, phone, address, dob, occupation);
-            }
-        } else if(extension.equals("xls")){
-            HSSFWorkbook workbook = new HSSFWorkbook(file);  //create a new workbook from the file selected 
-            HSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
-            Row row;
-            for(int i=0; i<=sheet.getLastRowNum(); i++){
-                row = sheet.getRow(i);
-                String name = row.getCell(0).getStringCellValue();
-                String sex = row.getCell(1).getStringCellValue();
-                String phone = row.getCell(2).getStringCellValue();
-                String address = row.getCell(2).getStringCellValue();
-                String dob = row.getCell(4).getStringCellValue();
-                String occupation = row.getCell(5).getStringCellValue();
-            
-                addNewMember(name, sex, phone, address, dob, occupation);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Chosen file is not of a supported format. \nPlease make sure it is a"
-                    + "Microsoft Excel file ");
-        }
+         switch (extension) {
+             case "xlsx":
+                 {
+                     XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
+                     XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+                     Row row;
+                     for(int i=0; i<=sheet.getLastRowNum(); i++){
+                         row = sheet.getRow(i);
+                         String name = row.getCell(0).getStringCellValue();
+                         String sex = row.getCell(1).getStringCellValue();
+                         String phone = row.getCell(2).getStringCellValue();
+                         String address = row.getCell(3).getStringCellValue();
+                         String dob = row.getCell(4).getStringCellValue();
+                         String occupation = row.getCell(5).getStringCellValue();
+                         
+                         addNewMember(name, sex, phone, address, dob, occupation);
+                     }        break;
+                 }
+             case "xls":
+                 {
+                     HSSFWorkbook workbook = new HSSFWorkbook(file);  //create a new workbook from the file selected 
+                     HSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+                     Row row;
+                     for(int i=0; i<=sheet.getLastRowNum(); i++){
+                         row = sheet.getRow(i);
+                         String name = row.getCell(0).getStringCellValue();
+                         String sex = row.getCell(1).getStringCellValue();
+                         String phone = row.getCell(2).getStringCellValue();
+                         String address = row.getCell(3).getStringCellValue();
+                         String dob = row.getCell(4).getStringCellValue();
+                         String occupation = row.getCell(5).getStringCellValue();
+                         
+                         addNewMember(name, sex, phone, address, dob, occupation);
+                     }        break;
+                 }
+             default:
+                 JOptionPane.showMessageDialog(null, "Chosen file is not of a supported format. \nPlease make sure it is a"
+                         + "Microsoft Excel file ");
+                 break;
+         }
     }
     
     public void deleteMember(String query, String criteria, String delKey, JTable table)throws Exception{

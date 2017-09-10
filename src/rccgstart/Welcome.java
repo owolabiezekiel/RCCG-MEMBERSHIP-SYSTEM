@@ -167,10 +167,8 @@ public class Welcome extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Welcome().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Welcome().setVisible(true);
         });
     }
 

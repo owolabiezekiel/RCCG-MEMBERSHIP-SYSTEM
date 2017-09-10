@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author TOBILOBA
  */
-public class addNewMember extends javax.swing.JFrame {
+public final class addNewMember extends javax.swing.JFrame {
 
     /**
      * Creates new form addNewMember
@@ -267,10 +267,8 @@ public class addNewMember extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new addNewMember().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new addNewMember().setVisible(true);
         });
     }
 
