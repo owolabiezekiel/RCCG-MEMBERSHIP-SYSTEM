@@ -24,6 +24,10 @@ public class MainPage extends javax.swing.JFrame {
         adminLoginPanel.setVisible(false);
          dbconnect.createAdminTable();
          dbconnect.createMemberTable();
+         boolean firstTime = dbconnect.isFirstTime();
+         if (firstTime){
+             dbconnect.addFirstAdmin();
+         }
     }
     
      DatabaseConnect dbconnect = new DatabaseConnect();

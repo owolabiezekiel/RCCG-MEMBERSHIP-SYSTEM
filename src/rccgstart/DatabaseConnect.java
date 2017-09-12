@@ -74,6 +74,43 @@ public class DatabaseConnect {
             JOptionPane.showMessageDialog(null, "Member_Table Was Not Created Successfully" + e);
          }
     }
+    
+    public boolean isFirstTime(){
+        try {
+             String checkFirst = "select * from ADMIN_TABLE";
+             pStatement = connection.prepareStatement(checkFirst);
+             result = pStatement.executeQuery();
+             if (result.next()){
+                 System.out.printf("Admin Table is not empty");
+                 JOptionPane.showMessageDialog(null, "There is one or more admin already");
+                 return false;
+             } else {
+                 return true;
+             }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Unable To Add New Member" + e);
+        }
+        return false;
+    }
+    
+    public void addFirstAdmin(){
+        try {
+                 String query = "insert into ADMIN_TABLE values(?,?)";
+                 pStatement = connection.prepareStatement(query);
+                pStatement.setString(1, "admin");
+                pStatement.setString(2, "admin");
+                 int success = pStatement.executeUpdate();
+                 if (success > 0){
+                     JOptionPane.showMessageDialog(null, "first Admin created successfully with username and password 'admin'");
+                     //new addNewMember().setVisible(false);
+                     //new viewAllMembers().setVisible(true);
+                 } else {
+                     JOptionPane.showMessageDialog(null, "Unable To Add New Member");
+                 }
+             } catch (SQLException e){
+             JOptionPane.showMessageDialog(null, "Unable To Add New Member" + e);
+         }
+    }
     public void setExtension(String ext){
         extension = ext;
     }
@@ -336,7 +373,7 @@ public class DatabaseConnect {
                  }
              }
              // Write to disk
-             xlsWorkbook.write(new FileOutputStream("C:\\Users\\TOBILOBA\\Desktop\\rccgdatabasetoexcel.xlsx"));
+             xlsWorkbook.write(new FileOutputStream("rccgdatabasetoexcel.xlsx"));
          }
         System.out.println("rccgdatabasetoexcel.xlsx written successfully");
     }
