@@ -82,7 +82,7 @@ public class DatabaseConnect {
              result = pStatement.executeQuery();
              if (result.next()){
                  System.out.printf("Admin Table is not empty");
-                 JOptionPane.showMessageDialog(null, "There is one or more admin already");
+                 //JOptionPane.showMessageDialog(null, "There is one or more admin already");
                  return false;
              } else {
                  return true;
@@ -373,7 +373,7 @@ public class DatabaseConnect {
                  }
              }
              // Write to disk
-             xlsWorkbook.write(new FileOutputStream("rccgdatabasetoexcel.xlsx"));
+             xlsWorkbook.write(new FileOutputStream(System.getProperty("user.home") + "\\Desktop\\rccgdatabasetoexcel.xlsx"));
          }
         System.out.println("rccgdatabasetoexcel.xlsx written successfully");
     }

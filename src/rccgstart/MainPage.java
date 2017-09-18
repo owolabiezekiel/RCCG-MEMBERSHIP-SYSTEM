@@ -11,13 +11,13 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author TOBILOBA
+ * @version 1.0
  */
 public class MainPage extends javax.swing.JFrame {
 
     /**
      * Creates new form MainPage
      */
-    
    
     public MainPage() {
         initComponents();
