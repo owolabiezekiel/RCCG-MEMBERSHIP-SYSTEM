@@ -313,6 +313,8 @@ public class DatabaseConnect {
         }
     }
     
+    ////http://index-of.org/archives/957
+    
     public int searchRecord(String query, String keyWord, String searchField, JTable table){
         int rows = 0;
         try{
