@@ -251,6 +251,7 @@ public class viewAllMembers extends javax.swing.JFrame {
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
+        new Welcome().setVisible(true);
     }//GEN-LAST:event_closeActionPerformed
 
     private void addNewMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewMemberActionPerformed

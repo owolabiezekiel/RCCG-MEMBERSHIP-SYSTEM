@@ -117,7 +117,7 @@ public class Welcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewMembersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewMembersActionPerformed
-        //this.setVisible(false);
+        this.setVisible(false);
         new viewAllMembers().setVisible(true);
     }//GEN-LAST:event_viewMembersActionPerformed
 
