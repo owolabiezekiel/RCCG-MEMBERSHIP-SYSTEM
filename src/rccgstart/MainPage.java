@@ -21,6 +21,7 @@ public class MainPage extends javax.swing.JFrame {
    
     public MainPage() {
         initComponents();
+        this.setVisible(true);
         adminLoginPanel.setVisible(false);
          dbconnect.createAdminTable();
          dbconnect.createMemberTable();

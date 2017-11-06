@@ -88,7 +88,7 @@ public class DatabaseConnect {
                  return true;
              }
         } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Unable To Add New Member" + e);
+            JOptionPane.showMessageDialog(null, "Unable To Create Admin Table" + e);
         }
         return false;
     }
@@ -111,6 +111,8 @@ public class DatabaseConnect {
              JOptionPane.showMessageDialog(null, "Unable To Add New Member" + e);
          }
     }
+    
+    
     public void setExtension(String ext){
         extension = ext;
     }
