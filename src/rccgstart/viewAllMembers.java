@@ -261,7 +261,7 @@ public class viewAllMembers extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.setVisible(false);
-        //new Welcome().setVisible(true);
+        new Welcome().setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
@@ -323,6 +323,7 @@ public class viewAllMembers extends javax.swing.JFrame {
         } catch (IOException | SQLException e){
             System.out.println(e);
         }
+    //new ExportNameAndType().setVisible(true);
     }//GEN-LAST:event_exportDatabaseActionPerformed
 
     private void deletePhraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePhraseActionPerformed
