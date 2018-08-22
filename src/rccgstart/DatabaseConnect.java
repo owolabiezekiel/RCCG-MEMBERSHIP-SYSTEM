@@ -366,7 +366,7 @@ public class DatabaseConnect {
                         List<String> colNames = new ArrayList<>();
                         XSSFRow titleRow = xlsSheet.createRow(rowIndex++);
                         int colCount = colInfo.getColumnCount();
-                        
+
                         System.out.println("Gotten Data from Database successfully");
                         for (int i = 1; i <= colCount; i++) {
                             colNames.add(colInfo.getColumnName(i));
@@ -385,7 +385,7 @@ public class DatabaseConnect {
                             }
                         }
                         xlsWorkbook.write(new FileOutputStream(System.getProperty("user.home") + "\\Desktop\\rccgdatabasetoexcel.xlsx"));
-                        
+
                     } catch (IOException | SQLException ex) {
                         Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -400,60 +400,71 @@ public class DatabaseConnect {
     }
 
     public void importExcel() throws Exception {
-        FileInputStream file = new FileInputStream(getAbsolutePathhh());
-        int numberOfMembers = 0;
-        int numberOfDuplicates = 0;
-        
-        switch (extension) {
-            case "xlsx": {
-                XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
-                XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
-                Row row;
-                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                    row = sheet.getRow(i);
-                    String name = row.getCell(0).getStringCellValue();
-                    String sex = row.getCell(1).getStringCellValue();
-                    String phone = row.getCell(2).getStringCellValue();
-                    String address = row.getCell(3).getStringCellValue();
-                    String dob = row.getCell(4).getStringCellValue();
-                    String occupation = row.getCell(5).getStringCellValue();
+        try {
+            Thread importThread = new Thread() {
+                int numberOfMembers = 0;
+                int numberOfDuplicates = 0;
+                public void run() {
+                    try {
+                    FileInputStream file = new FileInputStream(getAbsolutePathhh());
+                    switch (extension) {
+                        case "xlsx": {
+                            XSSFWorkbook workbook = new XSSFWorkbook(file);  //create a new workbook from the file selected 
+                            XSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+                            Row row;
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                row = sheet.getRow(i);
+                                String name = row.getCell(0).getStringCellValue();
+                                String sex = row.getCell(1).getStringCellValue();
+                                String phone = row.getCell(2).getStringCellValue();
+                                String address = row.getCell(3).getStringCellValue();
+                                String dob = row.getCell(4).getStringCellValue();
+                                String occupation = row.getCell(5).getStringCellValue();
 
-                    if (!addNewMember(name, sex, phone, address, dob, occupation)) {
-                        numberOfDuplicates++;
-                    }
-                    numberOfMembers++;
-                }
-                break;
-            }
-            case "xls": {
-                HSSFWorkbook workbook = new HSSFWorkbook(file);  //create a new workbook from the file selected 
-                HSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
-                Row row;
-                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                    row = sheet.getRow(i);
-                    String name = row.getCell(0).getStringCellValue();
-                    String sex = row.getCell(1).getStringCellValue();
-                    String phone = row.getCell(2).getStringCellValue();
-                    String address = row.getCell(3).getStringCellValue();
-                    String dob = row.getCell(4).getStringCellValue();
-                    String occupation = row.getCell(5).getStringCellValue();
+                                if (!addNewMember(name, sex, phone, address, dob, occupation)) {
+                                    numberOfDuplicates++;
+                                }
+                                numberOfMembers++;
+                            }
+                            break;
+                        }
+                        case "xls": {
+                            HSSFWorkbook workbook = new HSSFWorkbook(file);  //create a new workbook from the file selected 
+                            HSSFSheet sheet = workbook.getSheetAt(0); // get the first sheet
+                            Row row;
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                row = sheet.getRow(i);
+                                String name = row.getCell(0).getStringCellValue();
+                                String sex = row.getCell(1).getStringCellValue();
+                                String phone = row.getCell(2).getStringCellValue();
+                                String address = row.getCell(3).getStringCellValue();
+                                String dob = row.getCell(4).getStringCellValue();
+                                String occupation = row.getCell(5).getStringCellValue();
 
-                    if (!addNewMember(name, sex, phone, address, dob, occupation)) {
-                        numberOfDuplicates++;
+                                if (!addNewMember(name, sex, phone, address, dob, occupation)) {
+                                    numberOfDuplicates++;
+                                }
+                                numberOfMembers++;
+                            }
+
+                            break;
+                        }
+
+                        default:
+                            JOptionPane.showMessageDialog(null, "Chosen file is not of a supported format. \nPlease make sure it is a"
+                                    + "Microsoft Excel file with extension of \"xlsx\" or \"xls\"");
+                            break;
                     }
-                    numberOfMembers++;
+                    } catch (Exception e){
+                        
+                    }
+                    JOptionPane.showMessageDialog(null, "Found " + numberOfDuplicates + " duplicate records");
                 }
-                
-                break;
-            }
-            
-            
-            default:
-                JOptionPane.showMessageDialog(null, "Chosen file is not of a supported format. \nPlease make sure it is a"
-                        + "Microsoft Excel file with extension of \"xlsx\" or \"xls\"");
-                break;
+            };
+            importThread.start();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Could not import records");
         }
-        JOptionPane.showMessageDialog(null, "Found " + numberOfMembers +" records and " + numberOfDuplicates + " duplicates");
     }
 
     public void deleteMember(String query, String criteria, String delKey, JTable table) throws Exception {
