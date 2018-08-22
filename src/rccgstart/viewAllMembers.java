@@ -65,6 +65,7 @@ public class viewAllMembers extends javax.swing.JFrame {
         deleteWord = new javax.swing.JLabel();
         deletePhrase = new javax.swing.JTextField();
         delete = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -107,7 +108,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 closeActionPerformed(evt);
             }
         });
-        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 530, 97, 37));
+        getContentPane().add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, 100, 40));
 
         addNewMember.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addNewMember.setText("Add New Member");
@@ -116,7 +117,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 addNewMemberActionPerformed(evt);
             }
         });
-        getContentPane().add(addNewMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 530, 153, 37));
+        getContentPane().add(addNewMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 153, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Find A Member By:");
@@ -154,7 +155,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 backActionPerformed(evt);
             }
         });
-        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 97, 37));
+        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 100, 40));
 
         numOfRecords.setBackground(new java.awt.Color(204, 204, 204));
         numOfRecords.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -203,7 +204,7 @@ public class viewAllMembers extends javax.swing.JFrame {
                 exportDatabaseActionPerformed(evt);
             }
         });
-        getContentPane().add(exportDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, 130, 40));
+        getContentPane().add(exportDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, 130, 40));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 0, 10, 590));
@@ -244,6 +245,15 @@ public class viewAllMembers extends javax.swing.JFrame {
             }
         });
         getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 200, -1, 31));
+
+        logout.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 540, 100, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -365,6 +375,11 @@ public class viewAllMembers extends javax.swing.JFrame {
         deleteWord.setText("Where " + deleteCriteria.getSelectedItem() +" is....");
     }//GEN-LAST:event_deleteCriteriaActionPerformed
 
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        this.setVisible(false);
+        new MainPage().setVisible(true);
+    }//GEN-LAST:event_logoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -419,6 +434,7 @@ public class viewAllMembers extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JButton logout;
     private javax.swing.JLabel memberDashboard;
     private javax.swing.JTable membersTable;
     private javax.swing.JTextField numOfRecords;

@@ -261,8 +261,6 @@ public class DatabaseConnect {
                 int success = pStatement.executeUpdate();
                 if (success > 0) {
                     JOptionPane.showMessageDialog(null, "New Member Added successfully");
-                    new addNewMember().setVisible(false);
-                    new viewAllMembers().setVisible(true);
                     return true;
                 } else {
                     JOptionPane.showMessageDialog(null, "Unable To Add New Member");
